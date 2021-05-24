@@ -25,76 +25,93 @@ function whatIsHappening() {
 
     // check email
 
+    // $errors =  array('email'=>'', 'street'=>'','streetnumber'=>'', 'city'=>'', 'zipcode'=>'');
+    // $_SESSION['errors'] = $errors;
 
-    if(empty($_POST['email'])) {
-        echo 'An email is required <br />';
-    } else {
-        $email = $_POST['email'];
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $emailErr = 'Email must be a valid email address';
-            echo $emailErr;
+    $errors = array('email' => '', 'street' => '');
+    $_SESSION['error'] = $errors;
+    $email = $street = $streetnumber = $city = $zipcode ='';
+    $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr= '';
+
+    if(isset($_POST['submit'])) {
+        if (empty($_POST['email'])) {
+            $emailErr = 'Email is required';
+        } else {
+            $email = $_POST['email'];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = 'Email must be a valid email address';
+            } else {
+                $_SESSION['email'] = $email;
+            }
+        }
+
+        // check street
+        if (empty($_POST['street'])) {
+            $streetErr = 'Street name is required';
+        } else {
+            $street = $_POST['street'];
+            if (!preg_match('/^[a-zA-Z\s]+$/', $street)) {
+                $streetErr = 'Street name must be letters and spaces only';
+            } else {
+                $_SESSION['street'] = $street;
+            }
+        }
+
+        // check streetnumber
+        if (empty($_POST['streetnumber'])) {
+            $streetnumberErr = 'Street number is required';
+        } else {
+            $streetnumber = $_POST['streetnumber'];
+            if (!is_numeric($streetnumber)) {
+                $streetnumberErr = 'Street number must be numbers only';
+            } else {
+                $_SESSION['streetnumber'] = $streetnumber;
+            }
+        }
+
+        // check city
+        if (empty($_POST['city'])) {
+            $cityErr = 'City name is required <br />';
+        } else {
+            $city = $_POST['city'];
+            if (!preg_match('/^[a-zA-Z\s]+$/', $city)) {
+                $cityErr = 'City name must be letters and spaces only';
+            } else {
+                $_SESSION['city'] = $city;
+            }
+        }
+
+        // check zipcode
+        if (empty($_POST['zipcode'])) {
+            $zipcodeErr = 'Zipcode is required <br />';
+        } else {
+            $zipcode = $_POST['zipcode'];
+            if (!is_numeric($zipcode)) {
+                $zipcodeErr = 'Zipcode must be numbers only';
+            } else {
+                $_SESSION['zipcode'] = $zipcode;
+            }
         }
     }
 
-    // check street
-    if(empty($_POST['street'])) {
-        echo 'Street name is required<br />';
-    } else {
-        $street = $_POST['street'];
-        if(!preg_match('/^[a-zA-Z\s]+$/', $street)){
-            $streetErr = 'Street name must be letters and spaces only';
-            echo $streetErr;
-        }
-    }
-
-    // check number
-    if(empty($_POST['streetnumber'])) {
-        echo 'Street number is required <br />';
-    } else {
-        $streetnumber = $_POST['streetnumber'];
-        if(!preg_match('/^[0-9]+$/', $streetnumber)){
-            $streetnumberErr = 'Street number  must be numbers only';
-            echo $streetnumberErr;
-        }
-    }
-
-    // check number
-    if(empty($_POST['city'])) {
-        echo 'City name is required <br />';
-    } else {
-        $city = $_POST['city'];
-        if(!preg_match('/^[a-zA-Z\s]+$/', $city)){
-            $cityErr = 'City name must be letters and spaces only';
-            echo $cityErr;
-        };
-    }
-
-    // check number
-    if(empty($_POST['zipcode'])) {
-        echo 'Zipcode is required <br />';
-    } else {
-        $zipcode = $_POST['zipcode'];
-        if(!preg_match('/^[0-9]+$/', $zipcode)){
-            $zipcodeErr = 'Zipcode must be numbers only';
-            echo $zipcodeErr;
-        }
-    }
-
+if(isset($_GET['food']) && $_GET['food'] === '0') {
 //your products with their price.
-$products = [
-    ['name' => 'Club Ham', 'price' => 3.20],
-    ['name' => 'Club Cheese', 'price' => 3],
-    ['name' => 'Club Cheese & Ham', 'price' => 4],
-    ['name' => 'Club Chicken', 'price' => 4],
-    ['name' => 'Club Salmon', 'price' => 5]
-];
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ]; }
+else {
 
-$products = [
-    ['name' => 'Cola', 'price' => 2],
-    ['name' => 'Fanta', 'price' => 2],
-    ['name' => 'Sprite', 'price' => 2],
-    ['name' => 'Ice-tea', 'price' => 3],
-];
+    $products = [
+        ['name' => 'Cola', 'price' => 2],
+        ['name' => 'Fanta', 'price' => 2],
+        ['name' => 'Sprite', 'price' => 2],
+        ['name' => 'Ice-tea', 'price' => 3],
+    ];
+}
 
 $totalValue = 0;
 
