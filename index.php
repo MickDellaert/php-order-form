@@ -21,18 +21,11 @@ function whatIsHappening() {
 }
 // whatIsHappening();
 
-// validation of form input
-
-    // check email
-
-    // $errors =  array('email'=>'', 'street'=>'','streetnumber'=>'', 'city'=>'', 'zipcode'=>'');
-    // $_SESSION['errors'] = $errors;
-
-    $errors = array('email' => '', 'street' => '');
-    $_SESSION['error'] = $errors;
+    // validation of form input
     $email = $street = $streetnumber = $city = $zipcode ='';
     $emailErr = $streetErr = $streetnumberErr = $cityErr = $zipcodeErr= '';
 
+    // check email
     if(isset($_POST['submit'])) {
         if (empty($_POST['email'])) {
             $emailErr = 'Email is required';
@@ -94,7 +87,7 @@ function whatIsHappening() {
         }
     }
 
-if(isset($_GET['food']) && $_GET['food'] === '0') {
+
 //your products with their price.
     $products = [
         ['name' => 'Club Ham', 'price' => 3.20],
@@ -102,8 +95,9 @@ if(isset($_GET['food']) && $_GET['food'] === '0') {
         ['name' => 'Club Cheese & Ham', 'price' => 4],
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
-    ]; }
-else {
+    ];
+
+if(isset($_GET['food']) && $_GET['food'] === '0') {
 
     $products = [
         ['name' => 'Cola', 'price' => 2],
@@ -111,8 +105,21 @@ else {
         ['name' => 'Sprite', 'price' => 2],
         ['name' => 'Ice-tea', 'price' => 3],
     ];
+    echo $products["price"];
+
 }
 
 $totalValue = 0;
+
+if(isset($_POST['products'])) {
+    $product = $_POST['products'];
+    echo 'is set!';
+    $key = key($product);
+    print_r($key);
+    print_r($products[$key]['price']);
+    $sum = $products[$key]['price'];
+
+    $totalValue = $totalValue + $sum;
+}
 
 require 'form-view.php';
