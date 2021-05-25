@@ -105,21 +105,40 @@ if(isset($_GET['food']) && $_GET['food'] === '0') {
         ['name' => 'Sprite', 'price' => 2],
         ['name' => 'Ice-tea', 'price' => 3],
     ];
-    echo $products["price"];
 
 }
 
 $totalValue = 0;
+$orderMessage = '';
 
-if(isset($_POST['products'])) {
-    $product = $_POST['products'];
-    echo 'is set!';
-    $key = key($product);
-    print_r($key);
-    print_r($products[$key]['price']);
-    $sum = $products[$key]['price'];
+if (isset($_POST['submit'])) {
+    if (isset($_POST['products'])) {
+        foreach (($_POST['products']) as $key => $value) {
+            $price = $products[$key]['price'];
+            $totalValue += $price;
+        }
 
-    $totalValue = $totalValue + $sum;
+        if (isset($_POST['express_delivery'])) {
+            $totalValue += 5;
+        }
+    } else {
+            $orderMessage = 'Please make your choice';
+            echo $orderMessage;
+        }
 }
+
+
+
+//        $productList = $_POST['products'];
+//        print_r($productList);
+//        echo 'is set!';
+//        $key = key($productList);
+//        print_r($key);
+//        print_r($products[$key]['price']);
+//        $sum = $products[$key]['price'];
+//
+//        $totalValue = $totalValue + $sum;
+
+
 
 require 'form-view.php';
