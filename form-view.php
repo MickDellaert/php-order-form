@@ -7,11 +7,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css"
           rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css">
     <title>Order food & drinks</title>
 </head>
 <body>
 
+<?php
+session_start();
 
+if(isset($_POST["email"])){
+$_SESSION['email'] = $_POST["email"];
+echo $_SESSION['email'];
+}
+?>
 
 <div class="container">
     <h1>Order food in restaurant "the Personal Ham Processors"</h1>
@@ -29,8 +37,8 @@
         <div class="form-row needs-validation">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control" value="<?php echo $email ?>"/>
-                <div><?php echo $emailErr ?></div>
+                <input type="text" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email) ?>"/>
+                <div class="error"><?php echo $errors['emailErr'] ?></div>
             </div>
 
         </div>
@@ -41,31 +49,32 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control" value="<?php echo $street ?>">
-                    <div><?php echo $streetErr ?></div>
+                    <input type="text" name="street" id="street" class="form-control" value="<?php echo htmlspecialchars($street) ?>">
+                    <div class="error"><?php echo $errors['streetErr'] ?></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo $streetnumber ?>">
-                    <div><?php echo $streetnumberErr ?></div>
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo htmlspecialchars($streetnumber) ?>">
+                    <div class="error"><?php echo $errors['streetnumberErr'] ?></div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control" value="<?php echo $city ?>">
-                    <div><?php echo $cityErr ?></div>
+                    <input type="text" id="city" name="city" class="form-control" value="<?php echo htmlspecialchars($city) ?>">
+                    <div class="error"><?php echo $errors['cityErr'] ?></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo $zipcode ?>">
-                    <div><?php echo $zipcodeErr ?></div>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo htmlspecialchars($zipcode) ?>">
+                    <div class="error"><?php echo $errors['zipcodeErr'] ?></div>
                 </div>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>Products</legend>
+            <div class="error"><?php echo $errors['orderErr'] ?></div>
             <?php foreach ($products AS $i => $product): ?>
                 <label>
                     <input type="checkbox" value="1" name="products[<?php echo $i ?>]"/> <?php echo $product['name'] ?> -
