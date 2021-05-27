@@ -8,6 +8,13 @@ error_reporting(E_ALL);
 
 //we are going to use session variables so we need to enable sessions
 
+session_start();
+
+if (isset($_POST["email"])) {
+    $_SESSION['email'] = $_POST["email"];
+    $userEmail = $_SESSION['email'];
+}
+
 
 function whatIsHappening()
 {
@@ -112,20 +119,30 @@ if (isset($_POST['submit'])) {
             $_SESSION['zipcode'] = $zipcode;
         }
     }
+}
 
     // calculating the total of the order and displaying error message when order is empty
 
-        if (!empty($_POST['products'])) {
-            echo "Your order:";
+        if (isset($_POST['products'])) {
             foreach (($_POST['products']) as $key => $value) {
+                echo $value;
                 $price = $products[$key]['price'];
                 $totalValue += $price;
+                $orderValue = $totalValue;
+
                 $orderItemName = $products[$key]['name'];
-                echo "<li>Item: $orderItemName - Price: €$price</li>";
+                $_SESSION['name'] = $orderItemName;
+                echo $_SESSION['name'];
             }
             if (isset($_POST['express_delivery'])) {
+                $orderValue += 5;
                 $totalValue += 5;
             }
+            if (!isset($_COOKIE["totalValue"])){
+                setcookie("totalValue", "$totalValue", 0, "/");
+            }
+
+
         } else {
             $errors['orderErr'] = 'Please make your choice';
         }
@@ -138,7 +155,22 @@ if (isset($_POST['submit'])) {
             }
         }
 
+$totalValue += $_COOKIE['totalValue'];
+setcookie("totalValue", "$totalValue" );
+
+function getDeliveryTime (){
+    $currentTime = date("h:i");
+    if(isset($_POST["express_delivery"])) {
+        $expressDelivery= date("H:i" ,strtotime('+45 minutes',strtotime($currentTime))); 
+        return "Your order will be delivered at " . $expressDelivery . "</br>";
+    } else {
+        $normalDelivery= date("H:i" ,strtotime('+2 hours',strtotime($currentTime)));
+        return "Your order will be delivered at " . $normalDelivery . "</br>";
+    }
 }
+
+
+// whatIsHappening();
 
 require 'form-view.php';
 require 'confirmation.php';

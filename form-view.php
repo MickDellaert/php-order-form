@@ -12,14 +12,7 @@
 </head>
 <body>
 
-<?php
-session_start();
 
-if(isset($_POST["email"])){
-$_SESSION['email'] = $_POST["email"];
-echo $_SESSION['email'];
-}
-?>
 
 <div class="container">
     <h1>Order food in restaurant "the Personal Ham Processors"</h1>

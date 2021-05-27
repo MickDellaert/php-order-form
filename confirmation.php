@@ -14,13 +14,27 @@
 </head>
 <body>
 
-<p><?php echo $orderMessage; ?></p>
+<?php echo "<p>$orderMessage</p>";
 
-<?php //if (isset($_POST['products'])) {
-//    foreach (($_POST['products']) as $key => $value) {
-//    echo "$products[$key]['price'] $products[$key]['name']";
-//    }}?>
- 
+if (!empty($_POST['products'])) {
+    echo "Your order:";
+    foreach (($_POST['products']) as $key => $value) {
+        $price = $products[$key]['price'];
+        $totalValue += $price;
+        $orderItemName = $products[$key]['name'];
+        echo "<li>Item: $orderItemName - Price: €$price</li>";
+    }
+    if (isset($_POST['express_delivery'])) {
+        $totalValue += 5;
+    }
+
+
+echo getDeliveryTime();
+
+echo "Total: €$$orderValue <br />"; }
+?>
+
+
 
 
 
