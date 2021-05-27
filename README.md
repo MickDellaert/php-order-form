@@ -1,5 +1,16 @@
 # Title: Order form
 
+Making an order form in PHP:
+* Validating order inputs
+* Checking for erroneous user inputs and displaying errors
+* Submitting the form when inputs are valid  
+* Calculating the order
+* Using sessions and cookies
+* Using multiple php files
+* Debugging php
+
+---
+
 - Repository: `php-order-form`
 - Type of Challenge: `Learning challenge`
 - Duration: `3 days`

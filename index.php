@@ -155,13 +155,15 @@ if (isset($_POST['submit'])) {
             }
         }
 
+
 $totalValue += $_COOKIE['totalValue'];
 setcookie("totalValue", "$totalValue" );
+
 
 function getDeliveryTime (){
     $currentTime = date("h:i");
     if(isset($_POST["express_delivery"])) {
-        $expressDelivery= date("H:i" ,strtotime('+45 minutes',strtotime($currentTime))); 
+        $expressDelivery= date("H:i" ,strtotime('+45 minutes',strtotime($currentTime)));
         return "Your order will be delivered at " . $expressDelivery . "</br>";
     } else {
         $normalDelivery= date("H:i" ,strtotime('+2 hours',strtotime($currentTime)));
